@@ -1,0 +1,48 @@
+.section{
+    background-color: aqua;
+    height: 18rem;
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: 2s;
+    text-align: center;
+}
+
+.section:hover{
+    transform: scale(1.05);
+}
+
+.link{
+    color: white;
+    text-decoration: none;
+}
+
+.image{
+    height: 7rem;
+    border-radius: 2rem;
+    width: 10rem;
+    object-fit: cover;
+    border: 5px solid white;
+}
+
+.info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.info p{
+    margin-block: 5px;
+}
+
+.name{
+    font-size: 1.2rem;
+    padding-bottom:4px ;
+    border-bottom: 2px solid white;
+}

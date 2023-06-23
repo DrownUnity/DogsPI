@@ -1,0 +1,36 @@
+.section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aqua;
+}
+
+.btn{
+    text-decoration: none;
+    color: black;
+    font-size: 3rem;
+    font-weight: 1rem;
+    transition: 1s;
+}
+
+.btn::after{
+    content: "";
+    width: 0;
+    height: 3px;
+    background-color: white;
+    margin: auto;
+    display: block;
+}
+
+.btn:hover::after{
+    width: 100%;
+    transition: width 1s linear;
+}
+
+.btn:hover{
+    color: white;
+}
+
+.btn:hover{
+    transform: scale(1.1);
+}
