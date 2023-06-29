@@ -7,10 +7,36 @@
 }
 
 .form{
+    display: grid;
+    grid-template-columns: 40rem;
+    grid-template-rows: auto;
+    padding-bottom: 10px;
+    border-bottom: 5px solid aqua;
+}
+
+
+.form p{
+    color: rgba(255, 0, 0, 0.392);
+    height: 1px;
+    padding-bottom:1rem ;
+}
+
+.info{
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    text-align: justify;
     gap: 1rem;
-    justify-content: center;
+}  
+
+.art{
+    display: grid;
+    width: 10rem;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+
+.art input{
+    width: 4rem;
 }
 
 .form button{
@@ -24,23 +50,18 @@
     margin: auto;
     cursor: pointer;
     transition: 1s;
-}
-
-.from button:hover{
-    transform: scale(1.4);
-}
-
-.art{
-    gap: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.art input{
-    width: 4rem;
+    margin-top: 2rem;
 }
 
 .btn{
-    border: none;
-}
+    margin: 2rem;
+    text-decoration: none;
+    color: black;
+    padding: 4px;
+    border-bottom: 3px solid aqua;
+}   
+
+.error {
+    color: red;
+  }
+  

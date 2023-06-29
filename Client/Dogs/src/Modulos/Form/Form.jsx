@@ -1,66 +1,105 @@
 import { useState } from "react";
-import Styles from "./form.module.css"
-import axios from 'axios'
+import Styles from "./form.module.css";
+import axios from 'axios';
+import validation from "./validation";
+import { NavLink } from "react-router-dom";
 
+function Form() {
+  const URL = "http://localhost:3001/dogs";
+  const initialInput = {
+    name: "",
+    image: "",
+    temperament: "",
+    lifeSpan: "",
+    weightMin: 0,
+    weightMax: 0,
+    heightMin: 0,
+    heightMax: 0,
+  };
+  const [input, setInput] = useState(initialInput);
+  const [error, setError] = useState({});
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInput({ ...input, [name]: value });
+    setError(validation({ ...input, [name]: value }));
+  };
 
-function Form(){
-
-    const [input, setInput] = useState({
-        raza: "",
-        imagen: "",
-        temperamento: "",
-        lifeSpan: "",
-        weightMin: "",
-        weightMax: "",
-        heightMin: "",
-        heightMax: "",
-    })
-
-    const handleChange = event
-
-    const handleSubmit = async(event)=>{
-        event.preventDefault();
-
-        const form = event.target;
-
-        try{
-            const formData = new FormData(form);
-           await  axios.post("http://localhost:3001/dogs/", formData )
-        }catch(error){
-            console.log(error)
-        }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.post(URL, input);
+      setInput(initialInput);
+      alert("Datos enviados");
+    } catch (error) {
+      console.log({ error: error.message });
     }
+  };
 
-    return(
-        <section className={Styles.section}>
-            <h1>Ingresa tus datos</h1>
-            <form className={Styles.form} method="POST" onSubmit={handleSubmit}>
-                <label htmlFor="">Raza</label>
-                <input type="text" value={input.raza}/>
-                <label htmlFor="">Imagen</label>
-                <input type="file" name="" id="" className={Styles.btn}/>
-                <label htmlFor="">Temperamento</label>
-                <input type="text" />
-                <label htmlFor="">Esperanza de Vida</label>
-                <input type="text" />
-                <article className={Styles.art}>
-                    <label htmlFor="">Peso mínimo</label>
-                    <input type="number" />
-                    <label htmlFor="">Peso máximo</label>
-                    <input type="number" />
-                </article>
-                <article className={Styles.art}>
-                    <label htmlFor="">Altura mínima</label>
-                    <input type="number" />
-                    <label htmlFor="">Altura máxima</label>
-                    <input type="number" />
-                </article>
 
-                <button>Enviar</button>
-            </form>
-        </section>
-    )
+  return (
+    <section className={Styles.section}>
+      <h1>Ingresa tus datos</h1>
+
+      <form className={Styles.form} method="POST" onSubmit={handleSubmit}>
+        <article className={Styles.info}>
+          <label htmlFor="raza">Raza</label>
+          <input type="text" id="name" name="name" value={input.name} onChange={handleChange} />
+        </article>
+        <p className={error.name ? Styles.error : ""}>{error.name ? error.name : null}</p>
+        <article className={Styles.info}>
+          <label htmlFor="imagen">Imagen URL</label>
+          <input type="text" id="image" name="image" value={input.image} onChange={handleChange} />
+        </article>
+        <p className={error.image ? Styles.error : ""}>{error.image ? error.imagen : null}</p>
+        <article className={Styles.info}>
+          <label htmlFor="temperamento">Temperamento</label>
+          <input type="text" id="temperament" name="temperament" value={input.temperament} onChange={handleChange} />
+        </article>
+        <p className={error.temperament ? Styles.error : ""}>{error.temperament ? error.temperament : null}</p>
+        <article className={Styles.info}>
+          <label htmlFor="lifeSpan">Esperanza de Vida</label>
+          <input type="text" id="lifeSpan" name="lifeSpan" value={input.lifeSpan} onChange={handleChange} />
+        </article>
+        <p className={error.lifeSpan ? Styles.error : ""}>{error.lifeSpan ? error.lifeSpan : null}</p>
+
+        <article className={Styles.info}>
+
+          <article className={Styles.art}>
+            <label htmlFor="weightMin">Peso mínimo</label>
+            <input type="number" id="weightMin" name="weightMin" value={input.weightMin} onChange={handleChange} />
+          </article>
+            <p className={error.weightMin ? Styles.error : ""}>{error.weightMin ? error.weightMin : null}</p>
+
+          <article className={Styles.art}>
+            <label htmlFor="weightMax">Peso máximo</label>
+            <input type="number" id="weightMax" name="weightMax" value={input.weightMax} onChange={handleChange} />
+          </article>
+            <p className={error.weightMax ? Styles.error : ""}>{error.weightMax ? error.weightMax : null}</p>
+        </article>
+
+        <article className={Styles.info}>
+
+          <article className={Styles.art}>
+            <label htmlFor="heightMin">Altura mínima</label>
+            <input type="number" id="heightMin" name="heightMin" value={input.heightMin} onChange={handleChange} />
+          </article>
+            <p className={error.heightMin ? Styles.error : ""}>{error.heightMin ? error.heightMin : null}</p>
+
+          <article className={Styles.art}>
+            <label htmlFor="heightMax">Altura máxima</label>
+            <input type="number" id="heightMax" name="heightMax" value={input.heightMax} onChange={handleChange} />
+          </article>
+            <p className={error.heightMax ? Styles.error : ""}>{error.heightMax ? error.heightMax : null}</p>
+
+        </article>
+        <button type="submit">Enviar</button>
+      </form>
+      <NavLink to={"/home"} className={Styles.btn}>
+        Regresa al inicio
+      </NavLink>
+    </section>
+  );
 }
 
 export default Form;

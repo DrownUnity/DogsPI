@@ -28,18 +28,32 @@ function Detail(){
   
     }, [URL])
 
+    const dogId = dogs.id
+
+    const handleId = (dogId) => {
+      let numId = 265;
+  
+      if (isNaN(dogId)) {
+        dogId = numId;
+      }
+  
+      numId++;
+  
+      return dogId;
+    };
+
     return(
     <section className={Styles.section}>
       <article className={Styles.title} >
-        <h3>{dogs.id}</h3>
+        <h3>{handleId(dogId)}</h3>
         <h2>{dogs.name}</h2>
       </article>
         <img src={dogs.image} alt={dogs.name} className={Styles.image}/>
       <article className={Styles.info}>
-        <p>Altura: {dogs.height?.metric} cm</p>
-        <p>Peso: {dogs.weight?.metric} kg</p>
+        <p>Altura: {dogs.heightMin} - {dogs.heightMax} cm</p>
+        <p>Peso: {dogs.weightMin} - {dogs.weightMax} kg</p>
         <p>Temperamentos {dogs.temperament}</p>
-        <p>Años de vida: {dogs.life_span}</p>
+        <p>Años de vida: {dogs.lifeSpan}</p>
       </article>
       <NavLink to={"/home"} className={Styles.btn}>
         Regresa al inicio

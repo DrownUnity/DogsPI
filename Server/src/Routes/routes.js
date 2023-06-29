@@ -53,23 +53,43 @@ router.get("/dogs/:idRaza", async(req, res) => {
 router.get("/temperaments", async (req, res) => {
   const allData = await axios.get(URL + `?api_key=${API_KEY}`);
   
-  try {
-    let temps = allData.data.map(dog => dog.temperament ? dog.temperament : null).map(dog => dog?.split(", "));
-    let eachTem = [...new Set(temps.flat())];
+  const { name } = req.query;
 
-    eachTem.forEach(async dogo => {
-      if (dogo) {
-        await Temperament.findOrCreate({
-          where: { name: dogo }
-        });
-      }
-    });
+  if (name) {
+    try {
+      const filteredData = allData.data.filter((dog) => {
+        if (dog.temperament) {
+          const temperaments = dog.temperament.split(", ");
+          return temperaments.includes(name);
+        }
+        return false;
+      });
 
-    eachTem = await Temperament.findAll();
+      res.status(200).json(filteredData);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    try {
+      let temps = allData.data
+        .map((dog) => dog.temperament ? dog.temperament : null)
+        .map((dog) => dog?.split(", "));
+      let eachTem = [...new Set(temps.flat())];
 
-    res.status(200).json(eachTem);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+      eachTem.forEach(async (dogo) => {
+        if (dogo) {
+          await Temperament.findOrCreate({
+            where: { name: dogo }
+          });
+        }
+      });
+
+      eachTem = await Temperament.findAll();
+
+      res.status(200).json(eachTem);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 });
 
@@ -77,42 +97,40 @@ router.get("/temperaments", async (req, res) => {
 //! POST 
 
 router.post("/dogs", async (req, res) => {
+  try {
     let { name, heightMin, heightMax, weightMin, weightMax, lifeSpan, temperament, image } = req.body;
-  
-    if (!image) {
-      try {
-        image = await (await axios.get(`https://dog.ceo/api/breeds/image/random`)).data.message;
-      } catch (error) {
-        res.status(404).json({ error: error.message });
-      }
-    }
 
-    if (temperament && typeof temperament === "string") {
-      temperament = temperament.split(", ");
-    }
-  
-    if (name && heightMin && heightMax && weightMax && weightMin && lifeSpan && temperament && image) {
+    console.log(req.body);
+
+    if (name && heightMin && heightMax && weightMin && weightMax && temperament && image) {
+
       const createDog = await Dog.create({
         name: name,
-        heightMax: parseInt(heightMax),
         heightMin: parseInt(heightMin),
-        weightMax: parseInt(weightMax),
+        heightMax: parseInt(heightMax),
         weightMin: parseInt(weightMin),
+        weightMax: parseInt(weightMax),
         lifeSpan: lifeSpan,
         image: image,
+        temperament: temperament
       });
-  
-      temperament.map(async (temp) => {
-        const findTemp = await Temperament.findAll({
-          where: { name: temp },
+
+      for (let temp of temperament) {
+        const findTemp = await Temperament.findOne({
+          where: { name: temp }
         });
-        createDog.addTemperament(findTemp);
-      });
-  
+        await createDog.addTemperament(findTemp);
+      }
+
       res.status(201).json(createDog);
     } else {
-      res.status(404).json({ error: "Falta uno o más campos requeridos." });
+      res.status(400).json({ error: "Faltan campos requeridos" });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
   
 module.exports = router;

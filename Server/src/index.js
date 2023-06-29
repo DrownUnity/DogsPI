@@ -6,7 +6,7 @@ const Temperament = require("./Models/Temperament")
 
 async function main(){
     try{
-        await sequelize.sync({force:true});
+        await sequelize.sync();
         app.listen(3001);
 console.log("Server listeing on port 3001")
     }catch(error){

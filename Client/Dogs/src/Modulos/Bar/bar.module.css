@@ -8,23 +8,6 @@
     padding-inline:1rem ;
 }
 
-.filtros{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.selector{
-    width:7rem;
-    height: 1.5rem;
-    text-align: center;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: white;
-}
-
 .form{
     display: flex;
     justify-content: center;
@@ -44,5 +27,35 @@
 }
 
 .btn:hover{
+    transform: scale(1.1);
+}
+
+.dogo{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-weight: 10rem;
+    transition: 1s;
+}
+
+.dogo::after{
+    content: "";
+    width: 0;
+    height: 3px;
+    background-color: white;
+    margin: auto;
+    display: block;
+}
+
+.dogo:hover::after{
+    width: 100%;
+    transition: width 1s linear;
+}
+
+.dogo:hover{
+    color: white;
+}
+
+.dogo:hover{
     transform: scale(1.1);
 }

@@ -33,3 +33,22 @@
 .active{
     color: aqua;
 }
+
+.filtros{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding-top: 5px;
+}
+
+.selector{
+    width:7rem;
+    height: 1.5rem;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: aqua;
+    color: white;
+}

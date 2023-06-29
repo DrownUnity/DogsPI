@@ -5,6 +5,7 @@ import Styles from "./home.module.css";
 
 const Home = () => {
   const URL = "http://localhost:3001/dogs";
+  const URLTemps = "http://localhost:3001/temperaments"
   const itemsPerPage = 8;
 
   const [dogs, setDogs] = useState([]);
@@ -48,8 +49,44 @@ const Home = () => {
   const pageNumbers = Math.ceil(dogs.length / itemsPerPage);
   const pagination = Array.from({ length: pageNumbers }, (_, index) => index + 1);
 
+  const [temps, setTemps] = useState([]);
+
+ useEffect(() => {
+    const fetchTemps = async() => {
+        try{
+            const res = await axios.get(URLTemps);
+            const data = await res.data
+            setTemps(data)
+        } catch(error){
+            console.log(error);
+        }
+    }
+    fetchTemps();
+},[])
+
+  const listTemps = temps.map((temperament) => (
+    <option key={temperament.id} value={temperament.name}>{temperament.name} </option>
+))
+
   return (
-    <section className={Styles.section}>
+    <section className={Styles.section}> 
+      <article className={Styles.filtros}>
+        <label htmlFor="">Orden Alfabético: </label>
+        <select name="Alfabéticamente" id="" className={Styles.selector}>
+            <option value="Ascendente">Ascendente</option>
+            <option value="Descendente">Descendente</option>
+        </select>
+        <label htmlFor="">Peso: </label>
+        <select name="Peso" id="" className={Styles.selector}>
+            <option value="Mayor">Mayor</option>
+            <option value="Menor">Menor</option>
+        </select>
+        <label htmlFor="">Temperamentos: </label>
+        <select name="Temperamentos" id="" className={Styles.selector}>
+            <option>Todos</option>
+            {listTemps}
+        </select>
+      </article>
       <ul className={Styles.list}>{listedDogs}</ul>
       <ul className={Styles.pagination}>
         {pagination.map((number) => (
