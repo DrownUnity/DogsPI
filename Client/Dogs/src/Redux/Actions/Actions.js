@@ -26,20 +26,33 @@ export const getAllTemperaments = () => {
 }
 
 export const filteredTemps = (temperament) => {
-  return async function(dispatch){
-    try{
-      const response = await axios.get(`localhost:3001/temperaments?name${temperament}`);
-      const data = response.data
-      return dispatch({
-        type: DOGSBYTEMPERAMENT,
-        payload: data,
-      })
-      
-    }catch(error){
-      console.log({error: error.message})
+  return async function (dispatch) {
+    try {
+      if (temperament === "Todos") {
+        const response = await axios.get("http://localhost:3001/dogs/");
+        const data = response.data;
+        return dispatch({
+          type: DOGSBYTEMPERAMENT,
+          payload: data,
+        });
+      } else {
+        const response = await axios.get("/dogs");
+        const data = response.data;
+        const dogos = data.filter((dog) =>
+          dog.temperament && dog.temperament.includes(temperament)
+        );
+
+        return dispatch({
+          type: DOGSBYTEMPERAMENT,
+          payload: dogos,
+        });
+      }
+    } catch (error) {
+      console.log({ error: error.message });
     }
-  }
-}
+  };
+};
+
 
 export const orderedByWeight = (weight) => {
   return{

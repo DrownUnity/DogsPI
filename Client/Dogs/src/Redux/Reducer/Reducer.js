@@ -1,4 +1,4 @@
-import {ALPHABETIC, DOGSBYTEMPERAMENT, WEIGHT } from "../Types/Types";
+import {ALPHABETIC, DOGSBYTEMPERAMENT, WEIGHT, GET_ALL} from "../Types/Types";
 
 const initialState = {
   dogs: [],
@@ -6,23 +6,51 @@ const initialState = {
   temperament: []
 };
 
-const reducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ALPHABETIC: 
+    case GET_ALL: 
       return{
-
+        ...state,
+        dogs: action.payload,
+        allDogs: action.payload,
       }
-    case DOGSBYTEMPERAMENT:
-      return{
-
+      case ALPHABETIC: {
+        const alphabeticOrder = action.payload;
+  
+        const sortedData = state.allDogs.slice().sort((a, b) => {
+          if (alphabeticOrder === "Ascendente") {
+            return a.name.localeCompare(b.name);
+          } else if (alphabeticOrder === "Descendente") {
+            return b.name.localeCompare(a.name);
+          }
+          return 0;
+        });
+  
+        return {
+          ...state,
+          allDogs: sortedData,
+        };
       }
-    case WEIGHT:
-      return{
-
+      case WEIGHT: {
+        const weightOrder = action.payload;
+  
+        const sortedData = state.allDogs.slice().sort((a, b) => {
+          if (weightOrder === "Mayor") {
+            return b.weightMin - a.weightMin;
+          } else if (weightOrder === "Menor") {
+            return a.weightMin - b.weightMin;
+          }
+          return 0;
+        });
+  
+        return {
+          ...state,
+          allDogs: sortedData,
+        };
       }
     default:
       return state;
   }
 };
 
-export default reducer;
+export default rootReducer;
