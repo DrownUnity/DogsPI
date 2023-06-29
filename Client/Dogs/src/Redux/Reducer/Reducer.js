@@ -31,23 +31,28 @@ const rootReducer = (state = initialState, action) => {
           allDogs: sortedData,
         };
       }
-      case WEIGHT: {
-        const weightOrder = action.payload;
-  
-        const sortedData = state.allDogs.slice().sort((a, b) => {
-          if (weightOrder === "Mayor") {
-            return b.weightMin - a.weightMin;
-          } else if (weightOrder === "Menor") {
-            return a.weightMin - b.weightMin;
-          }
-          return 0;
-        });
-  
-        return {
-          ...state,
-          allDogs: sortedData,
-        };
-      }
+    case DOGSBYTEMPERAMENT:
+      return {
+        ...state,
+        allDogs: action.payload,
+    };
+    case WEIGHT: {
+      const weightOrder = action.payload;
+
+      const sortedData = state.allDogs.slice().sort((a, b) => {
+        if (weightOrder === "Mayor") {
+          return b.weightMin - a.weightMin;
+        } else if (weightOrder === "Menor") {
+          return a.weightMin - b.weightMin;
+        }
+        return 0;
+      });
+
+      return {
+        ...state,
+        allDogs: sortedData,
+      };
+    }
     default:
       return state;
   }
