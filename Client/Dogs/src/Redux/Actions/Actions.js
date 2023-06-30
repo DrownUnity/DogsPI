@@ -1,29 +1,37 @@
-import { DOGSBYTEMPERAMENT, MAXWEIGHT, MINWEIGHT, ALPHABETIC, GET_ALL, GET_ALL_TEMPS, WEIGHT } from '../Types/Types.js';
+import { DOGSBYTEMPERAMENT, ALPHABETIC, GET_ALL, GET_ALL_TEMPS, WEIGHT, FILTER_ORIGIN } from '../Types/Types.js';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:3001"
+axios.defaults.baseURL = "http://localhost:3001";
 
 export const getAllDogs = () => {
-  return async function (dispatch){
-    const response = await axios.get("http://localhost:3001/dogs/");
-    const data = response.data
-    return dispatch({
-      type: GET_ALL,
-      payload: data,
-    })
-  }
-}
+  return async function (dispatch) {
+    try {
+      const response = await axios.get("http://localhost:3001/dogs/");
+      const data = response.data;
+      return dispatch({
+        type: GET_ALL,
+        payload: data,
+      });
+    } catch (error) {
+      console.log({ error: error.message });
+    }
+  };
+};
 
 export const getAllTemperaments = () => {
-  return async function (dispatch){
-    const response = await axios.get("http://localhost:3001/temperaments")
-    const temperaments = response.data.map(dog => dog.name)
-    return dispatch({
-      type: GET_ALL_TEMPS,
-      payload: temperaments,
-    })
-  }
-}
+  return async function (dispatch) {
+    try {
+      const response = await axios.get("http://localhost:3001/temperaments");
+      const temperaments = response.data.map(dog => dog.name);
+      return dispatch({
+        type: GET_ALL_TEMPS,
+        payload: temperaments,
+      });
+    } catch (error) {
+      console.log({ error: error.message });
+    }
+  };
+};
 
 export const filteredTemps = (temperament) => {
   return async function (dispatch) {
@@ -36,7 +44,7 @@ export const filteredTemps = (temperament) => {
           payload: data,
         });
       } else {
-        const response = await axios.get("/dogs");
+        const response = await axios.get("http://localhost:3001/dogs/");
         const data = response.data;
         const dogos = data.filter((dog) =>
           dog.temperament && dog.temperament.includes(temperament)
@@ -53,32 +61,23 @@ export const filteredTemps = (temperament) => {
   };
 };
 
+export const orderByOrigin = (origin) => {
+  return {
+    type: FILTER_ORIGIN,
+    payload: origin,
+  };
+};
 
 export const orderedByWeight = (weight) => {
-  return{
+  return {
     type: WEIGHT,
     payload: weight,
-  }
-}
-
-export const orderedByWeightMin = (weightMin) => {
-  return{
-    type: MINWEIGHT,
-    payload: weightMin
-  }
-}
-
-export const orderedByWeightMax = (weightMax) => {
-  return{
-    type: MAXWEIGHT,
-    payload: weightMax
-  }
-}
-
+  };
+};
 
 export const orderredByAlphabet = (order) => {
-  return{
+  return {
     type: ALPHABETIC,
     payload: order,
-  }
-}
+  };
+};

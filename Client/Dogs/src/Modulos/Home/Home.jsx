@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../Card/Card";
 import Styles from "./home.module.css";
-import { filteredTemps, getAllDogs, orderedByWeight, orderredByAlphabet } from "../../Redux/Actions/Actions";
+import { filteredTemps, getAllDogs, orderByOrigin, orderedByWeight, orderredByAlphabet } from "../../Redux/Actions/Actions";
 
 const Home = () => {
 
@@ -74,6 +74,10 @@ const Home = () => {
 
  // Dispatch
 
+ const handleOrigin = (event) => {
+  dispatch(orderByOrigin(event.target.value))
+ }
+
   const handleAlphabetic = (event) => {
   dispatch(orderredByAlphabet(event.target.value));
  };
@@ -103,6 +107,12 @@ const Home = () => {
         <select name="Temperamentos" id="" className={Styles.selector} onChange={handleTemperaments}>
           <option value="Todos">Todos</option>
           {listTemps}
+        </select>
+        <label htmlFor="">Origen</label>
+        <select name="Origen" id="" className={Styles.selector} onChange={handleOrigin}>
+          <option value="Todos">Todos</option>
+          <option value="API">API</option>
+          <option value="DB">Base de Datos</option>
         </select>
       </article>
       <ul className={Styles.list}>{listedDogs}</ul>

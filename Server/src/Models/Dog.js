@@ -30,12 +30,12 @@ const Dog = sequelize.define("Dog", {
   },
   lifeSpan: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: true
-  }
+    allowNull: false,
+  },
 }, {
   timestamps: false
 });
