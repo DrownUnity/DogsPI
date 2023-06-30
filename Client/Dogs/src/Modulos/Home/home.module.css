@@ -2,14 +2,15 @@
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 20px;
     align-items: center;
     justify-content: center;
+    margin-top: -1rem;
 }
 
 .section{
-    height: 87vh;
     margin: 0;
+    height: 80vh;
 }
 
 .pagination{
@@ -34,21 +35,3 @@
     color: aqua;
 }
 
-.filtros{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding-top: 5px;
-}
-
-.selector{
-    width:7rem;
-    height: 1.5rem;
-    text-align: center;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: aqua;
-    color: white;
-}

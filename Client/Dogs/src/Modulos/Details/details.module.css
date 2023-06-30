@@ -1,11 +1,13 @@
 .image{
     width: 30rem;
     border-radius: 1rem;
+    object-fit: cover;
 }
 
 .section{
     padding-inline: 2rem;
-    height: 81.3vh;
+    height: 80vh;
+    margin-top: -4rem;
 }
 
 .title{
@@ -32,8 +34,11 @@
     border: 5px solid aqua;
     border-radius:1rem;
     transition: 1s;
+    margin-top: -2rem;
+    width: 10rem;
+    font-size: 20px;
 }
 
 .btn:hover{
-    transform: scale(2);
+    transform: scale(1.1);
 }

@@ -1,11 +1,11 @@
 .section{
-    height: 6vh;
     display: flex;
     align-items:center;
     justify-content:space-between;
     gap: 2rem;
     background-color: aqua;
     padding-inline:1rem ;
+    height: 8vh;
 }
 
 .form{
@@ -58,4 +58,23 @@
 
 .dogo:hover{
     transform: scale(1.1);
+}
+
+.filtros{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.selector{
+    width:7rem;
+    height: 1.5rem;
+    text-align: center;
+    border: none;
+    font-size: 13px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color:white;
+    color: black;
 }
