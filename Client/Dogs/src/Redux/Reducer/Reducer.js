@@ -53,24 +53,24 @@ const rootReducer = (state = initialState, action) => {
         allDogs: sortedData,
       };
     }
-    case FILTER_ORIGIN:{
-
-      let listedDogos
-
-      if(action.payload === "DB"){
-        listedDogos = state.dogs.filter(dog => isNaN(dog.id))
-      } else if (action.payload === "APi"){
-        listedDogos = state.dogs.filter(dog => !isNaN(dog.id))
-      } else {
-      listedDogos = state.dogs;
+    case FILTER_ORIGIN: {
+      let listedDogos;
+    
+      if (action.payload === "DB") {
+        listedDogos = state.dogs.filter(dog => isNaN(dog.id));
+      } else if (action.payload === "API") {
+        listedDogos = state.dogs.filter(dog => dog.id <= 264);
+      } else if (action.payload === "Todos") {
+        listedDogos = state.dogs;
       }
-      
-      return{
+    
+      return {
         ...state,
-        allDogs: listedDogos,
-      }
+        allDogs: listedDogos
+      };
     }
-
+    
+    
   default:
       return state;
   }

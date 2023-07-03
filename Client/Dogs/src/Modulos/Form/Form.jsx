@@ -39,7 +39,7 @@ function Form() {
 
   return (
     <section className={Styles.section}>
-      <h1>Ingresa tus datos</h1>
+      <h1 className={Styles.title} >Ingresa tus datos</h1>
 
       <form className={Styles.form} method="POST" onSubmit={handleSubmit}>
         <article className={Styles.info}>
