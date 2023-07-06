@@ -3,7 +3,7 @@
     align-items:center;
     justify-content:space-between;
     gap: 2rem;
-    background-color: aqua;
+    background-color: rgb(88, 107, 211);
     padding-inline:1rem ;
     height: 8vh;
 }
