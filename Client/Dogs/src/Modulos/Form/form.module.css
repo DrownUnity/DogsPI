@@ -77,3 +77,9 @@
     color: red;
 }
   
+.info select{
+    background-color: aqua;
+    border: none;
+    border-radius: 10px;
+    height: 1.4rem;
+}

@@ -1,6 +1,6 @@
 const app = require("./app");
 const sequelize = require("./DB/database")
-const Dogs = require("./Models/Dog");
+const Dog = require("./Models/Dog");
 const Temperament = require("./Models/Temperament")
 
 
@@ -14,7 +14,7 @@ console.log("Server listeing on port 3001")
     }
 }
 
-Dogs.belongsToMany(Temperament, {through: "dogTemperaments"})
-Temperament.belongsToMany(Dogs, {through: "dogTemperaments"})
+Dog.belongsToMany(Temperament, { through: "dogTemperaments" });
+Temperament.belongsToMany(Dog, { through: "dogTemperaments" })
 
 main();

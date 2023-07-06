@@ -7,7 +7,7 @@ function validation(input){
     } 
 
     if(!input.image){
-        error.imagee = "Debes subir una imágen"
+        error.image = "Debes subir una imágen"
     }
 
     if(!input.temperament){

@@ -111,16 +111,18 @@ router.post("/dogs", async (req, res) => {
         weightMin: parseInt(weightMin),
         weightMax: parseInt(weightMax),
         lifeSpan: lifeSpan,
-        image: image,
-        temperament: temperament
+        image: image
       });
 
-      for (let temp of temperament) {
-        const findTemp = await Temperament.findOne({
-          where: { name: temp }
-        });
+      const findTemp = await Temperament.findOne({
+        where: { id: temperament }
+      });
+
+      if (findTemp) {
         await createDog.addTemperament(findTemp);
       }
+
+      console.log(findTemp);
 
       res.status(201).json(createDog);
     } else {
@@ -130,7 +132,5 @@ router.post("/dogs", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-
   
 module.exports = router;

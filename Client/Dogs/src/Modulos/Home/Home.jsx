@@ -1,36 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect} from 'react';
+import { useDispatch} from "react-redux";
 import Card from "../Card/Card";
 import Styles from "./home.module.css";
 import { getAllDogs, } from "../../Redux/Actions/Actions";
 
 
-const Home = () => {
+const Home = (props) => {
+
+  const {currentDogs, paginate, pagination, currentPage} = props;
 
   // Dogs Data
   const dispatch = useDispatch();
-  const allDogs = useSelector((state) => state.allDogs);
 
   useEffect(() => {
     dispatch(getAllDogs());
   }, [dispatch]);
-
-
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const dogsPerPage = 8;
-
-  const lastIndex = currentPage * dogsPerPage;
-  const firstIndex = lastIndex - dogsPerPage;
-  const currentDogs = allDogs.slice(firstIndex, lastIndex);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const pageNumbers = Math.ceil(allDogs.length / dogsPerPage);
-  const pagination = Array.from({ length: pageNumbers }, (_, index) => index + 1);
-
 
   // Dogs per Page
 

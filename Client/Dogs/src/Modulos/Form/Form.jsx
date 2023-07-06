@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Styles from "./form.module.css";
 import axios from 'axios';
 import validation from "./validation";
@@ -36,6 +36,28 @@ function Form() {
     }
   };
 
+    // Temperamentos
+
+    const URLTemps = "http://localhost:3001/temperaments"
+
+    const [temps, setTemps] = useState([]);
+  
+    useEffect(() => {
+       const fetchTemps = async() => {
+           try{
+               const res = await axios.get(URLTemps);
+               const data = await res.data
+               setTemps(data)
+           } catch(error){
+               console.log(error);
+           }
+       }
+       fetchTemps();
+   },[])
+   
+     const listTemps = temps.map((temperament) => (
+       <option key={temperament.id} value={temperament.id}>{temperament.name} </option>
+   ))
 
   return (
     <section className={Styles.section}>
@@ -48,13 +70,16 @@ function Form() {
         </article>
         <p className={error.name ? Styles.error : ""}>{error.name ? error.name : null}</p>
         <article className={Styles.info}>
-          <label htmlFor="imagen">Imagen URL</label>
+          <label htmlFor="image">Imagen URL</label>
           <input type="text" id="image" name="image" value={input.image} onChange={handleChange} />
         </article>
         <p className={error.image ? Styles.error : ""}>{error.image ? error.imagen : null}</p>
         <article className={Styles.info}>
           <label htmlFor="temperamento">Temperamento</label>
-          <input type="text" id="temperament" name="temperament" value={input.temperament} onChange={handleChange} />
+          <select name="temperament" id="temperament" onChange={handleChange}>
+            <option value="">Selecciona un temperamento</option>
+            {listTemps}
+          </select>   
         </article>
         <p className={error.temperament ? Styles.error : ""}>{error.temperament ? error.temperament : null}</p>
         <article className={Styles.info}>

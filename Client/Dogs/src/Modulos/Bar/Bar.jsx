@@ -1,12 +1,17 @@
 import {useState, useEffect } from "react";
 import axios from "axios";
 import Styles from "./bar.module.css"
-import {useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch} from "react-redux";
 import { NavLink } from "react-router-dom";
 import { filteredTemps, orderByOrigin, orderedByWeight, orderredByAlphabet } from "../../Redux/Actions/Actions";
 
-const Bar = () => {
+const Bar = (props) => {
+
+  const {setCurrentPage} = props;
+
+    const location = useLocation();
+    const isHomeRoute = location.pathname === "/home"
 
     const URL = "http://localhost:3001/dogs"
     const dispatch = useDispatch()
@@ -41,8 +46,6 @@ const Bar = () => {
       setName(e.target.value);
     };
 
-    
-
   // Temperamentos
 
   const URLTemps = "http://localhost:3001/temperaments"
@@ -70,26 +73,29 @@ const Bar = () => {
 
  const handleOrigin = (event) => {
   dispatch(orderByOrigin(event.target.value))
+  setCurrentPage(1)
  }
 
   const handleAlphabetic = (event) => {
   dispatch(orderredByAlphabet(event.target.value));
+  setCurrentPage(1)
  };
 
  const handleWeight = (event) => {
   dispatch(orderedByWeight(event.target.value));
+  setCurrentPage(1)
  };
 
  const handleTemperaments = (event) => {
   dispatch(filteredTemps(event.target.value));
+  setCurrentPage(1)
  };
-
-
 
 
     return(
         <section className={Styles.section}>
           <NavLink to="/form" className={Styles.dogo}>¡Crea tu dogo!</NavLink>
+          {isHomeRoute && (
             <article className={Styles.filtros}>
               <label htmlFor="">Orden Alfabético: </label>
               <select name="Alfabéticamente" id="" className={Styles.selector} onChange={handleAlphabetic}>
@@ -112,7 +118,8 @@ const Bar = () => {
                 <option value="API">API</option>
                 <option value="DB">Base de Datos</option>
               </select>
-            </article>      
+            </article>  
+            )}  
             <form action="" className={Styles.form} onSubmit={handleSearch}>
                 <label htmlFor="">Buscar raza: </label>
                 <input type="text" placeholder="Husky..." value={name} onChange={handleInputChange}/>
