@@ -27,6 +27,8 @@ const Home = (props) => {
         weightMax={dog.weightMax}
         image={dog.image}
         temperament={dog.temperament}
+        Temperaments={dog.Temperaments}
+
       />
     </li>
   ));
